@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors";
 import RegisterRouter from "./routes/register.js";
 import loginrouter from "./routes/login.js";
+import logoutRouter from "./routes/logout.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
@@ -29,9 +30,9 @@ app.use(session({
 }));
 
 
-
 app.use("/register",RegisterRouter)
 app.use("/login",loginrouter)
+app.use("/logout",logoutRouter)
 
 // app.post("/login", (req, res) => {
 //     console.log("📥 Received a Post  request from Login Page:", req.body);

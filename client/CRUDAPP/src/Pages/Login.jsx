@@ -1,28 +1,48 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Login = () => {
-    
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedin, setloggedin] = useState(false)
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("Email:", email, "Password:", password);
 
-    const response=await fetch("http://localhost:8800/login",{
+    const response = await fetch("http://localhost:8800/login", {
 
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials:"include",
-      body: JSON.stringify({ email:email, password: password })
+      credentials: "include",
+      body: JSON.stringify({ email: email, password: password })
     })
+    const data = await response.json();
+    if (response.ok) {
+      setloggedin(true)
 
+
+    }
+
+    console.log(data)
 
   };
 
+
+  const logout=async (e)=>{
+    console.log("logged out")
+    const response= await fetch("http://localhost:8800/logout",{
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email: email, password: password })
+    })
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className=" bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Login to Your Account
         </h2>
@@ -54,12 +74,18 @@ const Login = () => {
           </div>
 
           {/* Login Button */}
-          <button
+          {loggedin ? (<button
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition duration-300"
           >
+            Logout
+          </button>) : (<button
+            onClick={logout}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition duration-300"
+          >
             Login
-          </button>
+          </button>)}
+
 
           {/* Divider */}
           <div className="text-center text-gray-500 mt-4">or</div>
