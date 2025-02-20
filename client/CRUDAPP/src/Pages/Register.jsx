@@ -18,6 +18,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Hi heello hopw are you")
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;

@@ -29,10 +29,11 @@ loginrouter.post("/",(req,res)=>{
         const user = result[0];
         req.session.user = { id: user.id, name: user.userName, email: user.email };
         console.log('the session looks like this after login was successfull',req.session);
-        console.log('the cookie looks like '+req.cookies);
+        // console.log('the cookie looks like '+req.cookies);
         
         return res.status(200).json({ message: "Email exists, now checking password..." ,user});
     });
+
 
 
  

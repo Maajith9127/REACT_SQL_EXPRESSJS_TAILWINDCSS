@@ -3,6 +3,8 @@ import cors from "cors";
 import RegisterRouter from "./routes/register.js";
 import loginrouter from "./routes/login.js";
 import logoutRouter from "./routes/logout.js";
+import Authenticate from "./routes/auth.js";
+import trial from "./routes/trial.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
@@ -22,7 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: true, // Change to true if using HTTPS
+        secure: false, // Change to true if using HTTPS
         httpOnly: true, // ✅ Prevents JavaScript access (stops XSS attacks)
         sameSite: "Strict", // ✅ Helps prevent CSRF attacks
         maxAge: 1000 * 60 * 30 // ✅ Session expires in 30 minutes
@@ -30,9 +32,14 @@ app.use(session({
 }));
 
 
+
+
+
 app.use("/register",RegisterRouter)
 app.use("/login",loginrouter)
 app.use("/logout",logoutRouter)
+app.use("/auth",Authenticate)
+app.use("/trial",trial)
 
 // app.post("/login", (req, res) => {
 //     console.log("📥 Received a Post  request from Login Page:", req.body);
